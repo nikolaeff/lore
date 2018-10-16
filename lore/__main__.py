@@ -846,7 +846,7 @@ def lab(parsed, unknown):
 
 
 def install_darwin():
-    install_gcc_5()
+    install_gcc()
     install_pyenv()
     install_graphviz()
 
@@ -909,20 +909,20 @@ def install_pyenv():
 
 
 def install_xcode():
-    result = subprocess.call(('xcode-select', '--install'), stderr=subprocess.PIPE)
+    result = subprocess.call(('xcode-select', '--print-path'), stderr=subprocess.PIPE)
     if result > 0:
         print(ansi.success('CHECK') + ' xcode-select --install')
     else:
         print(ansi.success('INSTALL') + ' xcode command line tools')
 
 
-def install_gcc_5():
-    if which('gcc-5'):
+def install_gcc():
+    if which('gcc-5') || which('gcc-6') || which('gcc-7'):
         return
 
     install_homebrew()
-    print(ansi.success('INSTALL') + ' gcc 5 for xgboost')
-    subprocess.check_call(('brew', 'install', 'gcc@5'))
+    print(ansi.success('INSTALL') + ' gcc-7 for xgboost')
+    subprocess.check_call(('brew', 'install', 'gcc@7'))
 
 
 def install_bazel():
